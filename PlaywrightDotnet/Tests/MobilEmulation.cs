@@ -26,7 +26,8 @@ namespace PlaywrightDotnet.Tests
 
             await page.GotoAsync("https://qualitytestinghub.com/");
 
-
+            var iPhone = playwright.Devices["iPhone 13"];
+            var samsung = playwright.Devices["Galaxy S III landscape"];
 
         }
 
@@ -42,7 +43,7 @@ namespace PlaywrightDotnet.Tests
                 Channel = "chrome"
             });
 
-            var iphone13 = playwright.Devices["iPhone 13"];
+            var iphone13 = playwright.Devices["iPhone 14 Pro landscape"];
 
             var browserContext = await browser.NewContextAsync(iphone13);
 

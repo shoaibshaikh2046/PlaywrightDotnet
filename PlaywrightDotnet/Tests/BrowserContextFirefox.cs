@@ -6,19 +6,35 @@ namespace PlaywrightDotnet.Tests
     [TestFixture]
     public class BrowserContextFirefox
     {
+
+        // Issue opening page in same browser context : https://github.com/microsoft/playwright/issues/3696
+
         [Test]
         public async Task Test_FirefoxAsync()
         {
+
             var playwright = await Playwright.CreateAsync();
+
             var browser = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false, // runs with chrome open
-                SlowMo = 50, // slows the execution 
+                Headless = false,
                 Channel = "firefox"
             });
-            var browserContext = await browser.NewContextAsync();
-            var page = await browserContext.NewPageAsync(); // Default page timeout is 30000ms
-            await page.GotoAsync("https://qualitytestinghub.com/");
+
+            // one browser context
+            var context = await browser.NewContextAsync();
+
+            // page 1
+            var page = await context.NewPageAsync();
+            page.GotoAsync("https://qualitytestinghub.com/");
+
+
+            // second browser context
+            var context2 = await browser.NewContextAsync();
+
+            // page 1
+            var page2 = await context2.NewPageAsync();
+            page2.GotoAsync("https://google.com/");
 
 
         }

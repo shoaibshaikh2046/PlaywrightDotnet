@@ -38,6 +38,9 @@ namespace PlaywrightDotnet.Tests
                 Path = "state.json"
             });
 
+
+            // Sharing the State
+
             var context2 = await browser.NewContextAsync(new()
             {
                 StorageStatePath = "state.json"

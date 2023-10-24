@@ -12,15 +12,37 @@ namespace PlaywrightDotnet.Tests
         [Test]
         public async Task Test_ChromiumAsync()
         {
+
             var playwright = await Playwright.CreateAsync();
 
-            var browser = await playwright.Chromium.LaunchAsync();
+            var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+                Channel = "chromium"
+            });
 
-            var browserContext = await browser.NewContextAsync();
+            // one browser context
+            var context = await browser.NewContextAsync();
 
-            var page = await browserContext.NewPageAsync(); // Default page timeout is 30000ms
+            // page 1
+            var page = await context.NewPageAsync();
+            page.GotoAsync("https://qualitytestinghub.com/");
 
-            await page.GotoAsync("https://qualitytestinghub.com/");
+            // page 2 
+            var page12 = await context.NewPageAsync();
+            page12.GotoAsync("https://opensource-demo.orangehrmlive.com/");
+
+
+            // second browser context
+            var context2 = await browser.NewContextAsync();
+
+            // page 1
+            var page2 = await context2.NewPageAsync();
+            page2.GotoAsync("https://google.com/");
+
+            // page 2
+            var page22 = await context2.NewPageAsync();
+            page22.GotoAsync("https://playwright.dev/dotnet/");
 
         }
 

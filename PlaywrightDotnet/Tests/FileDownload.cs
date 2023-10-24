@@ -25,12 +25,17 @@ namespace PlaywrightDotnet.Tests
 
             await page.GotoAsync("https://www.lambdatest.com/selenium-playground/download-file-demo");
 
+            // Using Wait For download async
+
             var waitForDownloadTask = page.WaitForDownloadAsync();
             await page.Locator("//button[.='Download File']").ClickAsync();
 
             var download = await waitForDownloadTask;
 
             await download.SaveAsAsync("Data/" + download.SuggestedFilename);
+
+
+
 
 
         }
